@@ -14,7 +14,7 @@ boot:
 
 halt:
   cli ; clear interrupt flag
-  htl ; halt execution
+  hlt ; halt execution
   
 
 
