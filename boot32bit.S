@@ -87,6 +87,6 @@ halt:
 
 section .bss:; all variables initialized to 0
 align
-bottom_of_stack: equ $
+bottom_of_stack: 
 resb 32768 ; reference: https://www.nasm.us/xdoc/2.11.06/html/nasmdoc3.html#section-3.2.2
 top_of_stack:
