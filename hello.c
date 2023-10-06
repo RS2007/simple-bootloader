@@ -6,16 +6,24 @@ int fib(int n) {
   }
   return fib(n - 1) + fib(n - 2);
 }
+void printFib(uint *offset, char color) {
+  printString(offset,"Fibonnaci Numbers: ",color);
+  goToNewLine(offset);
+  for (int i = 1; i <= 15; i++) {
+    printNumber(offset,i,color);
+    printString(offset,":",color);
+    printNumber(offset, fib(i), color);
+    printString(offset," ",color);
+  }
+}
 
 void test_vga_driver() {
   const char color = 0x0f;
   const char *hello = "Hello from C ";
-  char *vga_start_address_skipping_older_string =
-      (char *)0xb8000 + 80; // Length of the earlier string has to be skipped
-  printString(&vga_start_address_skipping_older_string, (char *)hello, color);
-  printString(&vga_start_address_skipping_older_string,
-              "10th Fibonacci numbers ", color);
-  printNumber(&vga_start_address_skipping_older_string, fib(10), color);
+  uint offset = 0;
+  printString(&offset, (char *)hello, color);
+  goToNewLine(&offset);
+  printFib(&offset, color);
 }
 
 void my_main() { test_vga_driver(); }

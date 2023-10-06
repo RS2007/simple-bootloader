@@ -70,14 +70,14 @@ hello: db "Hello world from the other sector",0
 setup: ; data segment address loaded to the segment registers 
   mov esi,hello ; load hello to the esi register
   mov ebx,0xb8000 ; store the start of the memory map to ebx
-.loop:
-  lodsb
-  or al,al ; check if the value stored in al is 0
-  jz halt  ; if al is 0 then halt
-  or eax,0x0f00 ; setting the ah bit to 10, black text on blue background(Reference: https://wiki.osdev.org/Text_UI) 
-  mov word [ebx], ax ; move the word (2 bytes from ebx,16 bits) from ax to the memory mapped area for the vga
-  add ebx,2 ; The next address to write to is 2 words away from the original, so add 2 to address in ebx
-  jmp .loop
+;.loop:
+;  lodsb
+;  or al,al ; check if the value stored in al is 0
+;  jz halt  ; if al is 0 then halt
+;  or eax,0x0f00 ; setting the ah bit to 10, black text on blue background(Reference: https://wiki.osdev.org/Text_UI) 
+;  mov word [ebx], ax ; move the word (2 bytes from ebx,16 bits) from ax to the memory mapped area for the vga
+;  add ebx,2 ; The next address to write to is 2 words away from the original, so add 2 to address in ebx
+;  jmp .loop
 halt:
   mov esp,top_of_stack ; grows downwards so initialize on the top
   extern my_main ; symbol not in current .o file
