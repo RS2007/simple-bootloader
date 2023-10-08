@@ -31,14 +31,21 @@ unsigned int printf(uint *offset, char color, const char *format_string, ...) {
       }
       case 'x': {
         int number = va_arg(ptr, int);
+        char buffer[8];
+        int j = 0;
         while (number != 0) {
           int remainder = number % 16;
-          if (number < 10)
-            printCharacter(offset, remainder + '0', color);
+          if (remainder < 10)
+            buffer[j] = remainder + '0';
           else
-            printCharacter(offset, remainder - 10 + 'a', color);
+            buffer[j] = remainder - 10 + 'a';
           number = number / 16;
+          j++;
         }
+        for (j = j - 1; j >= 0; j--) {
+          printCharacter(offset, buffer[j], color);
+        }
+        continue;
       }
       case 'n': {
         goToNewLine(offset);
@@ -54,9 +61,7 @@ unsigned int printf(uint *offset, char color, const char *format_string, ...) {
   return final_offset - initial_offset;
 }
 
-void goToNewLine(uint *offset) {
-  (*offset) = (((*offset) / 80) + 2) * ROW_LENGTH;
-}
+void goToNewLine(uint *offset) { (*offset) = 160 * (((*offset) / 160) + 1); }
 
 void printCharacter(uint *offset, char print_char, char color) {
   char *vga_mem = (char *)VGA_BASE + *offset;
