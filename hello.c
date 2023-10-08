@@ -7,23 +7,22 @@ int fib(int n) {
   return fib(n - 1) + fib(n - 2);
 }
 void printFib(uint *offset, char color) {
-  printString(offset,"Fibonnaci Numbers: ",color);
-  goToNewLine(offset);
+  printString(offset, "Fibonnaci Numbers: %n", color);
   for (int i = 1; i <= 15; i++) {
-    printNumber(offset,i,color);
-    printString(offset,":",color);
-    printNumber(offset, fib(i), color);
-    printString(offset," ",color);
+    printf(offset, color, "%d:%d ", i, fib(i));
   }
 }
 
 void test_vga_driver() {
   const char color = 0x0f;
-  const char *hello = "Hello from C ";
+  const char *hello = "Hello from C%n";
   uint offset = 0;
-  printString(&offset, (char *)hello, color);
-  goToNewLine(&offset);
+  printf(&offset, color, hello);
   printFib(&offset, color);
+  printf(&offset, color, "Printing hex numbers%n");
+  for (int i = 0; i <= 16; i++) {
+    printf(&offset, color, "%x\n", i);
+  }
 }
 
 void my_main() { test_vga_driver(); }
